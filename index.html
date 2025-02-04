@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Másodfokú Egyenlet Megoldó</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("https://previews.123rf.com/images/ahulilabutin/ahulilabutin1601/ahulilabutin160100022/50321681-k%C3%A9zzel-%C3%ADrt-sz%C3%A1m%C3%ADt%C3%A1sa-magasabb-matematika-mint-a-h%C3%A1tt%C3%A9r.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            font-family: 'Roboto', sans-serif;
+            color: #f8f9fa;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            background: rgba(20, 30, 50, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            margin: auto;
+            color: #ffffff;
+        }
+        input {
+            width: 100px;
+            margin: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 20px;
+            background-color: #f1faee;
+            color: #1d3557;
+        }
+        select {
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 18px;
+            background-color: #e63946;
+            color: #ffffff;
+            border: none;
+        }
+        h2 {
+            font-size: 32px;
+            color: #ff6b6b;
+        }
+        p, label {
+            font-size: 20px;
+            color: #a8dadc;
+        }
+        ul {
+            text-align: left;
+            display: inline-block;
+            font-size: 20px;
+            color: #ffcb77;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Másodfokú Egyenlet Megoldó</h2>
+        <p>ax² + bx + c = 0</p>
+        <label for="viewSelect">Válassz egy opciót:</label>
+        <select id="viewSelect" onchange="toggleView()">
+            <option value="calculation">Számolás</option>
+            <option value="explanation">Magyarázat</option>
+        </select>
+        <div id="calculation" class="content">
+            <p>Adja meg az együtthatókat:</p>
+            <label for="a">a: </label>
+            <input type="number" id="a" step="any" oninput="solveEquation()">
+            <label for="b">b: </label>
+            <input type="number" id="b" step="any" oninput="solveEquation()">
+            <label for="c">c: </label>
+            <input type="number" id="c" step="any" oninput="solveEquation()">
+            <h3>Eredmény:</h3>
+            <p id="result"></p>
+        </div>
+        <div id="explanation" class="content">
+            <h3>Magyarázat</h3>
+            <p>Az egyenlet megoldóképlete:</p>
+            <p>x = (-b ± √Δ) / 2a, ahol Δ = b² - 4ac</p>
+            <p>A diszkrimináns határozza meg a gyökök típusát:</p>
+            <ul>
+                <li>Ha Δ > 0: két különböző valós gyök.</li>
+                <li>Ha Δ = 0: egy valós gyök.</li>
+                <li>Ha Δ < 0: nincs valós megoldás.</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        function toggleView() {
+            let selectedView = document.getElementById("viewSelect").value;
+            document.getElementById("calculation").style.display = selectedView === "calculation" ? "block" : "none";
+            document.getElementById("explanation").style.display = selectedView === "explanation" ? "block" : "none";
+        }
+        function solveEquation() {
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+            let result = document.getElementById("result");
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                result.innerHTML = "Kérlek, adj meg érvényes számokat!";
+                return;
+            }
+            let delta = b * b - 4 * a * c;
+            let deltaText = `Δ = ${b}² - 4 * ${a} * ${c} = ${delta}`;
+            if (delta > 0) {
+                let x1 = (-b + Math.sqrt(delta)) / (2 * a);
+                let x2 = (-b - Math.sqrt(delta)) / (2 * a);
+                result.innerHTML = `${deltaText}<br>Két valós gyök: x₁ = ${x1.toFixed(4)}, x₂ = ${x2.toFixed(4)}`;
+            } else if (delta === 0) {
+                let x = -b / (2 * a);
+                result.innerHTML = `${deltaText}<br>Egy valós gyök: x = ${x.toFixed(4)}`;
+            } else {
+                result.innerHTML = `${deltaText}<br>Nincs valós megoldás.`;
+            }
+        }
+        document.getElementById("calculation").style.display = "block";
+    </script>
+</body>
+</html>
