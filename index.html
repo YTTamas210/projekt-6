@@ -11,52 +11,70 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             font-family: 'Roboto', sans-serif;
             color: #f8f9fa;
             text-align: center;
-            margin: 50px;
+            margin: 20px;
+            min-height: 100vh;
         }
         .container {
             background: rgba(20, 30, 50, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            max-width: 800px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
             margin: auto;
             color: #ffffff;
         }
         input {
-            width: 100px;
-            margin: 15px;
-            padding: 10px;
+            width: 80px;
+            margin: 10px;
+            padding: 8px;
             border: none;
             border-radius: 8px;
             text-align: center;
-            font-size: 20px;
+            font-size: 18px;
             background-color: #f1faee;
             color: #1d3557;
         }
         select {
-            padding: 12px;
+            padding: 10px;
             border-radius: 10px;
-            font-size: 18px;
+            font-size: 16px;
             background-color: #e63946;
             color: #ffffff;
             border: none;
         }
         h2 {
-            font-size: 32px;
+            font-size: 28px;
             color: #ff6b6b;
         }
-        p, label {
-            font-size: 20px;
-            color: #a8dadc;
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         ul {
             text-align: left;
             display: inline-block;
-            font-size: 20px;
+            font-size: 18px;
             color: #ffcb77;
+        }
+        @media (max-width: 600px) {
+            input {
+                width: 60px;
+                font-size: 16px;
+            }
+            .container {
+                padding: 15px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            ul {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -71,16 +89,18 @@
         </select>
         <div id="calculation" class="content">
             <p>Adja meg az együtthatókat:</p>
-            <label for="a">a: </label>
-            <input type="number" id="a" step="any" oninput="solveEquation()">
-            <label for="b">b: </label>
-            <input type="number" id="b" step="any" oninput="solveEquation()">
-            <label for="c">c: </label>
-            <input type="number" id="c" step="any" oninput="solveEquation()">
+            <div class="input-group">
+                <label for="a">a:</label>
+                <input type="number" id="a" step="any" oninput="solveEquation()">
+                <label for="b">b:</label>
+                <input type="number" id="b" step="any" oninput="solveEquation()">
+                <label for="c">c:</label>
+                <input type="number" id="c" step="any" oninput="solveEquation()">
+            </div>
             <h3>Eredmény:</h3>
             <p id="result"></p>
         </div>
-        <div id="explanation" class="content">
+        <div id="explanation" class="content" style="display:none;">
             <h3>Magyarázat</h3>
             <p>Az egyenlet megoldóképlete:</p>
             <p>x = (-b ± √Δ) / 2a, ahol Δ = b² - 4ac</p>
@@ -107,6 +127,10 @@
                 result.innerHTML = "Kérlek, adj meg érvényes számokat!";
                 return;
             }
+            if (a === 0) {
+                result.innerHTML = "Ez nem másodfokú egyenlet!";
+                return;
+            }
             let delta = b * b - 4 * a * c;
             let deltaText = `Δ = ${b}² - 4 * ${a} * ${c} = ${delta}`;
             if (delta > 0) {
@@ -120,7 +144,6 @@
                 result.innerHTML = `${deltaText}<br>Nincs valós megoldás.`;
             }
         }
-        document.getElementById("calculation").style.display = "block";
     </script>
 </body>
 </html>
