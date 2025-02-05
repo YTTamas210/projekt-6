@@ -61,21 +61,6 @@
             font-size: 18px;
             color: #ffcb77;
         }
-        @media (max-width: 600px) {
-            input {
-                width: 60px;
-                font-size: 16px;
-            }
-            .container {
-                padding: 15px;
-            }
-            h2 {
-                font-size: 24px;
-            }
-            ul {
-                font-size: 16px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -101,14 +86,23 @@
             <p id="result"></p>
         </div>
         <div id="explanation" class="content" style="display:none;">
-            <h3>Magyarázat</h3>
-            <p>Az egyenlet megoldóképlete:</p>
-            <p>x = (-b ± √Δ) / 2a, ahol Δ = b² - 4ac</p>
-            <p>A diszkrimináns határozza meg a gyökök típusát:</p>
+            <h3>Mi az a másodfokú egyenlet?</h3>
+            <p>A másodfokú egyenlet olyan algebrai kifejezés, amelyben a legmagasabb hatvány az x².</p>
+            <p>Általános alakja: <strong>ax² + bx + c = 0</strong>, ahol a, b és c valós számok és a ≠ 0.</p>
+            <h3>Megoldási lépések:</h3>
+            <p>A másodfokú egyenlet megoldása a <strong>megoldóképlettel</strong> történik:</p>
+            <p><strong>x = (-b ± √Δ) / 2a</strong>, ahol <strong>Δ = b² - 4ac</strong></p>
             <ul>
-                <li>Ha Δ > 0: két különböző valós gyök.</li>
-                <li>Ha Δ = 0: egy valós gyök.</li>
-                <li>Ha Δ < 0: nincs valós megoldás.</li>
+                <li>Ha Δ > 0: Két különböző valós gyök.</li>
+                <li>Ha Δ = 0: Egy valós gyök.</li>
+                <li>Ha Δ < 0: Nincs valós megoldás (komplex számokat eredményez).</li>
+            </ul>
+            <h3>Felhasználási területek:</h3>
+            <ul>
+                <li>Fizikában: mozgási pályák számítása, pl. lövedékek röppályája.</li>
+                <li>Gazdaságban: profitmaximalizálás vagy költséganalízis.</li>
+                <li>Építészetben és mérnöki tudományokban: struktúrák stabilitásának elemzése.</li>
+                <li>Számítástechnikában és grafikában: például parabolák rajzolása.</li>
             </ul>
         </div>
     </div>
@@ -117,32 +111,6 @@
             let selectedView = document.getElementById("viewSelect").value;
             document.getElementById("calculation").style.display = selectedView === "calculation" ? "block" : "none";
             document.getElementById("explanation").style.display = selectedView === "explanation" ? "block" : "none";
-        }
-        function solveEquation() {
-            let a = parseFloat(document.getElementById("a").value);
-            let b = parseFloat(document.getElementById("b").value);
-            let c = parseFloat(document.getElementById("c").value);
-            let result = document.getElementById("result");
-            if (isNaN(a) || isNaN(b) || isNaN(c)) {
-                result.innerHTML = "Kérlek, adj meg érvényes számokat!";
-                return;
-            }
-            if (a === 0) {
-                result.innerHTML = "Ez nem másodfokú egyenlet!";
-                return;
-            }
-            let delta = b * b - 4 * a * c;
-            let deltaText = `Δ = ${b}² - 4 * ${a} * ${c} = ${delta}`;
-            if (delta > 0) {
-                let x1 = (-b + Math.sqrt(delta)) / (2 * a);
-                let x2 = (-b - Math.sqrt(delta)) / (2 * a);
-                result.innerHTML = `${deltaText}<br>Két valós gyök: x₁ = ${x1.toFixed(4)}, x₂ = ${x2.toFixed(4)}`;
-            } else if (delta === 0) {
-                let x = -b / (2 * a);
-                result.innerHTML = `${deltaText}<br>Egy valós gyök: x = ${x.toFixed(4)}`;
-            } else {
-                result.innerHTML = `${deltaText}<br>Nincs valós megoldás.`;
-            }
         }
     </script>
 </body>
