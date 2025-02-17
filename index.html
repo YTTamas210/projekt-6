@@ -82,35 +82,51 @@
                 <label for="c">c:</label>
                 <input type="number" id="c" step="any" oninput="solveEquation()">
             </div>
+            <h3>Megoldási lépések:</h3>
+            <p id="solutionSteps"></p>
             <h3>Eredmény:</h3>
             <p id="result"></p>
         </div>
-        <div id="explanation" class="content" style="display:none;">
-            <h3>Mi az a másodfokú egyenlet?</h3>
-            <p>A másodfokú egyenlet olyan algebrai kifejezés, amelyben a legmagasabb hatvány az x².</p>
-            <p>Általános alakja: <strong>ax² + bx + c = 0</strong>, ahol a, b és c valós számok és a ≠ 0.</p>
-            <h3>Megoldási lépések:</h3>
-            <p>A másodfokú egyenlet megoldása a <strong>megoldóképlettel</strong> történik:</p>
-            <p><strong>x = (-b ± √Δ) / 2a</strong>, ahol <strong>Δ = b² - 4ac</strong></p>
-            <ul>
-                <li>Ha Δ > 0: Két különböző valós gyök.</li>
-                <li>Ha Δ = 0: Egy valós gyök.</li>
-                <li>Ha Δ < 0: Nincs valós megoldás (komplex számokat eredményez).</li>
-            </ul>
-            <h3>Felhasználási területek:</h3>
-            <ul>
-                <li>Fizikában: mozgási pályák számítása, pl. lövedékek röppályája.</li>
-                <li>Gazdaságban: profitmaximalizálás vagy költséganalízis.</li>
-                <li>Építészetben és mérnöki tudományokban: struktúrák stabilitásának elemzése.</li>
-                <li>Számítástechnikában és grafikában: például parabolák rajzolása.</li>
-            </ul>
-        </div>
     </div>
     <script>
+        function solveEquation() {
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+            let solutionSteps = document.getElementById("solutionSteps");
+            let resultElement = document.getElementById("result");
+
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                solutionSteps.innerHTML = "";
+                resultElement.innerHTML = "Kérlek, adj meg minden együtthatót!";
+                return;
+            }
+
+            let delta = b * b - 4 * a * c;
+            solutionSteps.innerHTML = `<strong>1. Lépés:</strong> Számítsuk ki a diszkriminánst: Δ = b² - 4ac <br>
+                                       Δ = ${b}² - 4 * ${a} * ${c} = ${delta}`;
+
+            if (delta > 0) {
+                let x1 = (-b + Math.sqrt(delta)) / (2 * a);
+                let x2 = (-b - Math.sqrt(delta)) / (2 * a);
+                solutionSteps.innerHTML += `<br><strong>2. Lépés:</strong> Két megoldás van: x₁ és x₂.<br>
+                                           x₁ = (-b + √Δ) / 2a = (-${b} + √${delta}) / (2 * ${a}) = ${x1.toFixed(3)}<br>
+                                           x₂ = (-b - √Δ) / 2a = (-${b} - √${delta}) / (2 * ${a}) = ${x2.toFixed(3)}`;
+                resultElement.innerHTML = `Megoldások: x₁ = ${x1.toFixed(3)}, x₂ = ${x2.toFixed(3)}`;
+            } else if (delta === 0) {
+                let x = -b / (2 * a);
+                solutionSteps.innerHTML += `<br><strong>2. Lépés:</strong> Egy megoldás van, mert Δ = 0.<br>
+                                            x = -b / 2a = -${b} / (2 * ${a}) = ${x.toFixed(3)}`;
+                resultElement.innerHTML = `Egy megoldás van: x = ${x.toFixed(3)}`;
+            } else {
+                solutionSteps.innerHTML += `<br><strong>2. Lépés:</strong> Nincs valós megoldás, mert Δ < 0.`;
+                resultElement.innerHTML = "Nincs valós megoldás.";
+            }
+        }
+
         function toggleView() {
             let selectedView = document.getElementById("viewSelect").value;
             document.getElementById("calculation").style.display = selectedView === "calculation" ? "block" : "none";
-            document.getElementById("explanation").style.display = selectedView === "explanation" ? "block" : "none";
         }
     </script>
 </body>
