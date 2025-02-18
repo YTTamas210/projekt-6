@@ -129,25 +129,30 @@
             }
 
             let delta = b * b - 4 * a * c;
-            solutionSteps.innerHTML = `<strong>1. Lépés:</strong> Δ = ${delta}`;
+            solutionSteps.innerHTML = `<strong>1. Lépés:</strong> Δ = b² - 4ac = ${b}² - 4 * ${a} * ${c} = ${delta}`;
 
             if (delta > 0) {
                 let x1 = (-b + Math.sqrt(delta)) / (2 * a);
                 let x2 = (-b - Math.sqrt(delta)) / (2 * a);
+                solutionSteps.innerHTML += `<br><strong>2. Lépés:</strong> Két különböző valós megoldás van, mert Δ > 0.`;
                 resultElement.innerHTML = `Megoldások: x₁ = ${x1.toFixed(3)}, x₂ = ${x2.toFixed(3)}`;
             } else if (delta === 0) {
                 let x = -b / (2 * a);
+                solutionSteps.innerHTML += `<br><strong>2. Lépés:</strong> Egy megoldás van, mert Δ = 0.`;
                 resultElement.innerHTML = `Egy megoldás: x = ${x.toFixed(3)}`;
             } else {
+                solutionSteps.innerHTML += `<br><strong>2. Lépés:</strong> Nincs valós megoldás, mert Δ < 0, így a gyök alatt negatív szám van.`;
                 resultElement.innerHTML = "Nincs valós megoldás.";
             }
         }
 
         function toggleView() {
-            let selectedView = document.getElementById("viewSelect").value;
-            document.querySelectorAll(".content").forEach(el => el.classList.remove("active"));
-            document.getElementById(selectedView).classList.add("active");
-        }
+        let selectedView = document.getElementById("viewSelect").value;
+        document.getElementById("calculation").style.display = "none";
+        document.getElementById("explanation").style.display = "none";
+        
+        document.getElementById(selectedView).style.display = "block";
+    }
     </script>
 </body>
 </html>
